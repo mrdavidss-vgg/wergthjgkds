@@ -1,35 +1,32 @@
 import * as cheerio from 'cheerio';
+import logger from "./logger.js";
+
+const KEY_VALUE_REGEX = /p\[(?:'([^']+)'|`([^`]+)`|"([^"]+)")\]\s*=\s*(?:'([^']+)'|`([^`]+)`|"([^"]+)"|(\d+)|([^;]+));/g;
 
 function extractValuesFromHTML(html) {
-  // Load HTML into Cheerio
-  const $ = cheerio.load(html);
+  try {
+    if (typeof html !== 'string' || !html.trim()) {
+      throw new Error("Invalid HTML input provided.");
+    }
 
-  // Initialize an object to store the extracted values
-  const extractedValues = {
-    TID: null,
-    KEY: null,
-    CDN_DOMAIN: null,
-  };
+    const $ = cheerio.load(html);
+    const extractedValues = {};
 
-  // Extract <script> tags and iterate through them
-  $('script').each((i, script) => {
-    const scriptContent = $(script).html();
+    $('script').each((_, script) => {
+      $(script).html()?.trim()?.matchAll(KEY_VALUE_REGEX)?.forEach(match => {
+        const key = match[1] || match[2] || match[3];
+        const value = (match[4] || match[5] || match[6] || match[7] || match[8])?.trim();
+        if (key) extractedValues[key] = value;
+      });
+    });
 
-    // Use regex to find the required values in the script
-    const tidMatch = scriptContent.match(/p\['TID'\]\s*=\s*(\d+);/);
-    const keyMatch = scriptContent.match(/p\['KEY'\]\s*=\s*"(\d+)"/);
-    const cdnMatch = scriptContent.match(/p\['CDN_DOMAIN'\]\s*=\s*'([^']+)';/);
+    logger.debug(`Extracted values: ${JSON.stringify(extractedValues)}`);
+    return extractedValues;
 
-    // Store matched values if found
-    if (tidMatch) extractedValues.TID = tidMatch[1];
-    if (keyMatch) extractedValues.KEY = keyMatch[1];
-    if (cdnMatch) extractedValues.CDN_DOMAIN = cdnMatch[1];
-  });
-
-  return extractedValues;
+  } catch (error) {
+    logger.error(`Extraction error: ${error.message}`);
+    return null;
+  }
 }
 
 export default extractValuesFromHTML;
-
-// const extracted = extractValuesFromHTML(response.data);
-// console.log('Extracted Values:', extracted);
