@@ -18,23 +18,40 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        .dark-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #121212;
+            border-radius: 8px;
+            color: #ffffff;
         }
         h1 {
-            text-align: center;
             color: #333;
+        }
+        .dark-container h1 {
+            color: #ffffff;
         }
         form {
             display: flex;
             flex-direction: column;
             align-items: center;
         }
-        input[type="text"] {
+        input[type="text"],
+        input[type="url"] {
             width: 80%;
             padding: 10px;
             margin-bottom: 20px;
             border: 1px solid #ccc;
             border-radius: 4px;
             font-size: 16px;
+        }
+        .dark-container input {
+            background-color: #2c2c2c;
+            color: #ffffff;
+            border: 1px solid #4caf50;
         }
         button {
             padding: 10px 20px;
@@ -45,8 +62,14 @@
             font-size: 16px;
             cursor: pointer;
         }
+        .dark-container button {
+            background-color: #4caf50;
+        }
         button:hover {
             background-color: #218838;
+        }
+        .dark-container button:hover {
+            background-color: #45a049;
         }
         .result {
             margin-top: 20px;
@@ -58,6 +81,19 @@
         .success {
             color: green;
         }
+        .dark-container .result {
+            color: #ffeb3b;
+        }
+        .dark-container textarea {
+            width: 60%;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #2c2c2c;
+            border: 1px solid #4caf50;
+            color: #fff;
+            resize: none;
+            border-radius: 5px;
+        }
     </style>
 </head>
 <body>
@@ -68,6 +104,13 @@
             <button type="submit">Bypass</button>
         </form>
         <div class="result" id="result"></div>
+    </div>
+
+    <div class="dark-container">
+        <h1>Bypass URL</h1>
+        <input type="url" id="url" placeholder="Enter Linkvertise URL here..." required>
+        <button onclick="makeRequest()">Bypass</button>
+        <div class="result" id="dark-result"></div>
     </div>
 
     <script type="module">
@@ -96,80 +139,24 @@
                 resultDiv.classList.add('error');
             }
         });
-    </script>
-</body>
-</html>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bypass URL</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #121212;
-            color: #ffffff;
-            text-align: center;
-            margin-top: 50px;
-        }
-        input {
-            width: 60%;
-            padding: 10px;
-            margin: 10px;
-            border: 1px solid #4caf50;
-            border-radius: 5px;
-            background-color: #2c2c2c;
-            color: #ffffff;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #4caf50;
-            border: none;
-            color: #fff;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        #result {
-            margin-top: 20px;
-            color: #ffeb3b;
-        }
-        textarea {
-            width: 60%;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #2c2c2c;
-            border: 1px solid #4caf50;
-            color: #fff;
-            resize: none;
-            border-radius: 5px;
-        }
-    </style>
-</head>
-<body>
-    <h1>Bypass URL</h1>
-    <input type="text" id="url" placeholder="Enter Linkvertise URL here...">
-    <button onclick="makeRequest()">Bypass</button>
-    <div id="result"></div>
-
-    <script>
         async function makeRequest() {
             const inputUrl = document.getElementById("url").value;
+            const resultDiv = document.getElementById('dark-result');
 
             if (!inputUrl) {
-                document.getElementById("result").innerHTML = "No URL provided.";
+                resultDiv.textContent = "No URL provided.";
                 return;
             }
 
             try {
-                // Make a request to your PHP backend
-                make me one if possible.
-                
+                const response = await fetch('your-backend-endpoint', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ url: inputUrl })
+                });
 
                 if (!response.ok) {
                     throw new Error("Network response was not ok");
@@ -180,18 +167,17 @@
                 if (result.success) {
                     const bypassedURL = result.destination || result.bypassed_url;
 
-                    // Display the bypassed link
-                    document.getElementById("result").innerHTML = `
+                    resultDiv.innerHTML = `
                         <h3>Bypassed URL:</h3>
                         <textarea rows="3" readonly>${bypassedURL}</textarea>
                         <p><a href="${bypassedURL}" target="_blank">Open Link</a></p>
                     `;
                 } else {
-                    document.getElementById("result").innerHTML = "Failed to bypass the URL. Please try again.";
+                    resultDiv.textContent = "Failed to bypass the URL. Please try again.";
                 }
             } catch (error) {
                 console.error(error);
-                document.getElementById("result").innerHTML = "Error processing your request. Try again later.";
+                resultDiv.textContent = "Error processing your request. Try again later.";
             }
         }
     </script>
