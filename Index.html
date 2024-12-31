@@ -99,3 +99,101 @@
     </script>
 </body>
 </html>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bypass URL</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #ffffff;
+            text-align: center;
+            margin-top: 50px;
+        }
+        input {
+            width: 60%;
+            padding: 10px;
+            margin: 10px;
+            border: 1px solid #4caf50;
+            border-radius: 5px;
+            background-color: #2c2c2c;
+            color: #ffffff;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4caf50;
+            border: none;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        #result {
+            margin-top: 20px;
+            color: #ffeb3b;
+        }
+        textarea {
+            width: 60%;
+            margin-top: 10px;
+            padding: 10px;
+            background-color: #2c2c2c;
+            border: 1px solid #4caf50;
+            color: #fff;
+            resize: none;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Bypass URL</h1>
+    <input type="text" id="url" placeholder="Enter Linkvertise URL here...">
+    <button onclick="makeRequest()">Bypass</button>
+    <div id="result"></div>
+
+    <script>
+        async function makeRequest() {
+            const inputUrl = document.getElementById("url").value;
+
+            if (!inputUrl) {
+                document.getElementById("result").innerHTML = "No URL provided.";
+                return;
+            }
+
+            try {
+                // Make a request to your PHP backend
+                make me one if possible.
+                
+
+                if (!response.ok) {
+                    throw new Error("Network response was not ok");
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    const bypassedURL = result.destination || result.bypassed_url;
+
+                    // Display the bypassed link
+                    document.getElementById("result").innerHTML = `
+                        <h3>Bypassed URL:</h3>
+                        <textarea rows="3" readonly>${bypassedURL}</textarea>
+                        <p><a href="${bypassedURL}" target="_blank">Open Link</a></p>
+                    `;
+                } else {
+                    document.getElementById("result").innerHTML = "Failed to bypass the URL. Please try again.";
+                }
+            } catch (error) {
+                console.error(error);
+                document.getElementById("result").innerHTML = "Error processing your request. Try again later.";
+            }
+        }
+    </script>
+</body>
+</html>
