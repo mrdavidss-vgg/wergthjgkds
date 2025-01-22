@@ -19,7 +19,7 @@
     <div class="dark-container">
         <h1>Bypass URL</h1>
         <input type="url" id="url" placeholder="Enter Linkvertise URL here..." required>
-        <button onclick="makeRequest()">Bypass</button>
+        <button type="button" onclick="makeRequest()">Bypass</button>
         <div class="result" id="dark-result"></div>
     </div>
 
@@ -30,7 +30,7 @@
         import decodeURI from './decodeURI.js';
 
         document.getElementById('bypassForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+            event.preventDefault();  // Prevent the form from refreshing the page
             const url = document.getElementById('urlInput').value;
             const resultDiv = document.getElementById('result');
             resultDiv.textContent = 'Processing...';
