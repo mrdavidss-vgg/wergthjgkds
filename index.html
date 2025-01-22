@@ -4,97 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LootLink Bypass</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f9;
-        }
-        .container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #fff;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .dark-container {
-            max-width: 800px;
-            margin: 50px auto;
-            padding: 20px;
-            background-color: #121212;
-            border-radius: 8px;
-            color: #ffffff;
-        }
-        h1 {
-            color: #333;
-        }
-        .dark-container h1 {
-            color: #ffffff;
-        }
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-        input[type="text"],
-        input[type="url"] {
-            width: 80%;
-            padding: 10px;
-            margin-bottom: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-        }
-        .dark-container input {
-            background-color: #2c2c2c;
-            color: #ffffff;
-            border: 1px solid #4caf50;
-        }
-        button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 4px;
-            background-color: #28a745;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-        .dark-container button {
-            background-color: #4caf50;
-        }
-        button:hover {
-            background-color: #218838;
-        }
-        .dark-container button:hover {
-            background-color: #45a049;
-        }
-        .result {
-            margin-top: 20px;
-            text-align: center;
-        }
-        .error {
-            color: red;
-        }
-        .success {
-            color: green;
-        }
-        .dark-container .result {
-            color: #ffeb3b;
-        }
-        .dark-container textarea {
-            width: 60%;
-            margin-top: 10px;
-            padding: 10px;
-            background-color: #2c2c2c;
-            border: 1px solid #4caf50;
-            color: #fff;
-            resize: none;
-            border-radius: 5px;
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
@@ -125,7 +35,7 @@
             const resultDiv = document.getElementById('result');
             resultDiv.textContent = 'Processing...';
             resultDiv.classList.remove('error', 'success');
-            
+
             try {
                 const bypassedUrl = await bypass(url);
                 if (bypassedUrl) {
